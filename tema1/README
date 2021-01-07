@@ -1,0 +1,96 @@
+						TEMA 1. PROIECTAREA ALGORITMILOR
+							ANTOHER DAY IN GIGELAND
+							 CIUDIN ANTONELA 325CB
+
+	=> Pentru rezolvarea temei respective, m-am folosit de modul in care au 
+		fost implementate laboratoarele, inclusiv functiile de citire si scriere 
+		in fisier.
+
+	=> Problema 1 - Gigel trezoriei la BNR
+		
+		-> Stocare date de intrare:
+			n - numarul de bancnote
+			type - tipul subproblemei
+
+		-> Estimarea rezultatului:
+			Pentru inceput am verficat ce tipe de subproblema e. 
+			Pentru tipul 1, am calculat raspunsul cu ajutorul formulei dedusa 
+			prin desenarea arborelui de bancnote. Arborele se ramifica ajungand 
+			la 2^(n-1) copii pentru fiecare bancnota (*5).
+			Pentru tipul doi, am creat doi vectori a cate 5 celule, in care 
+			stochez cantitatea de bancnote de la pasul curent si de la cel 
+			anterior. Pentru o bancnota, modul de aranjare a fiecarui tip de 
+			bancnota este la fel 1, de aceea initializez cu 1 toate celulele. 
+			Apoi in dependenta de la ce tip de bancnota poate proveni bancnota 
+			curenta, sumez valorile corespunzatoare din vectorul de la pasul 
+			anterior. Actualizez vectorul old_bills_count. Sumez numarul de 
+			bancnote din vectorul bills_count de la ultimul pas (frunzele 
+			arborelui).
+
+		-> Metode ajutatoare:
+			Am folosit functia de ridicare la putere mai optimizata din 
+			laboratorul 4.
+
+	=> Problema 2 - Gigel si Gardul
+
+		-> Stocare date de intrare:
+			n - numarul de intervale
+			intervals - un array list de perechi, unde fiecare pereche contine 
+			inceputul si sfarsitul intervalului
+
+		-> Estimarea rezultatului:
+			Initial am sortat intervalele cu ajutorul metodei sort din clasa 
+			Collection, crescator dupa inceput si in caz de egalitate, 
+			descrescator dupa sfarsit.
+			Am intializat min si max dupa valorile start si end din primul 
+			interval.
+			Cu un for de la 1 (intervalul 0 este deja analizat) pana la n, 
+			verific mai intai daca intervalul se include in intervalul creat de 
+			min si max, daca da, atunci incrementez variabila res pentru 
+			intervale redundante. 
+			Verific daca startul intervalului curent este mai mare ca max, daca 
+			da, actualizez min, adica setez o noua margine inferioara a 
+			intervalului de reper. 
+			Verific daca endul intervalului curent este mai mare ca max, daca 
+			da, il actualizez pe max, setez o noua margine superioara.
+
+		-> Metode ajutatoare:
+			Am folosit metoda de sortare din clasa Pair. Am gasit ceva
+			asemanator pe net si am adaptat codului meu. Clasa respectiva
+			implementeaza Comparable si suprascrie metoda compareTo, in
+			dependenta de cum vreau sa sortez.
+
+	=> Problema 3 - Gigel Bombonel
+
+		-> Stocare date de intrare:
+			n - numarul de elevi
+			candy - numarul total de bomboane
+			intervals - array list de perechi, care contine un start si un end, 
+			care reprezinta "cam cate" probleme a rezolvat elevul
+
+		-> Estimarea rezultatului:
+			Am creat, asemanator cu problema 1, doi vectori. Unul pentru pasul 
+			curent, altul cu pasul anterior (candy_vec si old_candy_vec). 
+			Fiecare are atatea celule, cate bomboane per total are Gigel. 
+			Pentru primul pas, unui copil, i se poate imparti o bomboana, 
+			intr-un singur mod, de aceea am initializat cu 1, vectorul 
+			old_candy_vec pe intervalul corespunzator primului copil.
+			Incepand cu al doilea copil si pana la ultimul, am analizat in cate 
+			moduri pot fi impartite 0,1,2... bomboane. Am calculat noul start/
+			end, ca fiind numarul de bomboane curent (adica j) - start/end din 
+			intervalul de probleme rezolvate a copilului curent (adica i). 
+			Daca ambele intervale sunt negative, nu putem imparti bomboane, 
+			deci celula ramane setata pe zero si se continua cu urmatoarea 
+			iteratie. Daca una din margini e negativa, ea va fi setata pe 
+			marginea inferioara sau superioara (in depndenta de start sau end), 
+			a vectorului candy_vec. 
+			Apoi am sumat numarul de bomboane de la pasul anteriorul din 
+			intervalul nou calculat.
+			Am pastrat valoarea de pe ultima celula, pentru ca ea va fi 
+			rezultatul final, am actualizat vectorul de la pasul anterior si am 
+			golit vectorul de la pasul curent.
+			
+		-> Metode ajutatoare:
+			copy - returneaza o copie a vectorului primit ca parametru.
+			La fel, pentru ca am intervale, m-am folosit clasa Pair, care are
+			un start si un end.
