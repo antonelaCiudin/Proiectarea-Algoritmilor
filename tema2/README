@@ -1,0 +1,78 @@
+						TEMA 2. PROIECTAREA ALGORITMILOR
+							 ROBIN HOOD AND GRAPHS
+							 CIUDIN ANTONELA 325CB
+
+	=> Pentru rezolvarea temei respective, m-am folosit de modul in care au 
+		fost implementate laboratoarele, inclusiv functiile de citire si 
+		scriere in fisier.
+
+	=> Problema 2 - Robin Hood stealing for the poor
+		-> Complexitate:
+			temporala ->  O(|V|+|E|)
+			spatiala  ->  O(|V|^2)
+
+		-> Stocare date de intrare:
+			n - numarul de noduri din graf
+			m - numarul de drumuri in graf
+			source - orasul de unde porneste Robin Hood
+			dest - orasul in care acesta trebuie sa ajunga
+			graph - ArrayList care contine n celule de tip Edge pentru fiecare 
+					nod din graf, unde Edge contine nodul spre care pleaca si 
+					costul corespunzator.
+
+		-> Estimarea rezultatului:
+			Pentru inceput am initializat variabilele visited (vectorul care 
+			indica daca un nod e vizitat sau nu) si topSort (in viitor va 
+			reprezenta sortarea topologica a nodurilor). 
+			Dupa am parcurs in inaltime graful cu functia dfs, si am stocat 
+			sortarea in vectorul topSort.
+			Am initializat vectorul de costuri pe fiecare drum cu valori mai 
+			mari decat oricare cele ce pot aparea, inafara de costul pana la 
+			sursa, aceasta fiind 0.
+			Practic am folosit algoritmul Bellman Ford din laborator, doar ca 
+			modificat dupa cazul 2 din cazuri speciale din laboratorul 9, 
+			pentru ca graful respectiv este unul aciclic.
+			Respectiv am aparcurs graful in ordinea sortarii topologice.
+			La sfarsit am extras costul pana la nodul destinatie.
+
+	=> Problema 3 - Fooling the guards
+
+		-> Complexitate:
+			temporala ->  O(|E|*log|V|)
+			spatiala  ->  O(|V|^2)
+
+		-> Stocare date de intrare:
+			n - numarul de noduri (orase) din graf
+			m - numarul de drumuri in graf
+			e - energia initiala a lui Robin Hood
+			source - orasul de unde porneste Robin Hood, fiind mereu 1
+			dest - orasul in care acesta trebuie sa ajunga
+			graph - ArrayList care contine n celule de tip Edge pentru fiecare 
+					nod din graf, unde Edge contine nodul spre care pleaca si 
+					procentajul de energie care va fi cheltuit pe drum.
+
+		-> Estimarea rezultatului:
+			Pentru inceput am initializat vectorul de energii. Pentru sursa 
+			energia va fi initiala, deoarece Robin inca nu s-a deplasat 
+			nicaieri, pentru restul oraselor (nodurilor) energia initial e 0. 
+			Apoi vectorul visited, care indica daca un nod e vizitat sau nu.
+			Am creat si initializat vectorul de parinti, pentru a stocat de 
+			unde provine fiecare nod.
+			De asemenea exista o coada prioritara, populata cu elemente de tip 
+			Edge, care va fi sortata descrescator dupa procentajul de energie, 
+			intrucat ne intereseaza energia cea mai mare.
+			Am aplicat in esenta algoritmul Dijkstra, doar modificandu-l putin
+			Din coada respectiva se extrage cate un element.
+			Pentru elementul respectiv se analizeaza fiecare copil. Pentru 
+			fiecare copil se aplica conditia de relaxare, se verifica daca 
+			nodul nu e vizitat si daca energia actuala este mai mica decat 
+			energia care poate fi capatata pe drumul nou. Daca conditia este 
+			satisfacuta se actualizeaza valoarea in vectorul de energii, 
+			parintele si se adauga elementul in coada prioritara.
+			La sfarsit se extrage energia din orasul final, care reprezinta 
+			destinatia lui Robin Hood si se pastreaza in variabila globala 
+			finalEnergy.
+			Se returneaza vectorul de parinti.
+			Pentru afisare se creeaza o lista goala. Se apeleaza metoda getPath 
+			cu vectorul de parinti obtinut anterior si recursiv se 
+			reconstruieste drumul de la sursa pana la destinatie.
